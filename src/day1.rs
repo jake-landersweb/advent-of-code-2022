@@ -1,4 +1,4 @@
-pub fn day1() {
+pub fn part1() {
     // read a file
     let mut sums: Vec<i32> =
         include_str!("/Users/jakelanders/code/advent-of-code-2022/src/lib/day1.txt")

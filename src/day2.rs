@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-pub fn day2_part1() {
+pub fn part1() {
     let score_map = HashMap::from([("A", 1), ("B", 2), ("C", 3)]);
     let score_map2 = HashMap::from([("X", 1), ("Y", 2), ("Z", 3)]);
 
@@ -35,7 +35,7 @@ pub fn day2_part1() {
     println!("If everything goes to plan, the total score is: {:?}", sum);
 }
 
-pub fn day2_part2() {
+pub fn part2() {
     let score_map = HashMap::from([("A", 1), ("B", 2), ("C", 3)]);
     let lose_map = HashMap::from([("A", 3), ("B", 1), ("C", 2)]);
     let win_map = HashMap::from([("A", 2), ("B", 3), ("C", 1)]);
