@@ -1,0 +1,62 @@
+fn part1() {
+    let mut input: Vec<Vec<&str>> =
+        include_str!("/Users/jakelanders/code/advent-of-code-2022/src/lib/day7.txt")
+            .split("$")
+            .map(|x| x.lines().map(|y| y.trim()).collect())
+            .collect();
+
+    input.remove(0);
+
+    println!("{:?}", input.len());
+
+    let mut directories: BTreeMap<&str, u64> = BTreeMap::new();
+    let mut dir_history: Vec<&str> = vec![];
+    let mut visited: Vec<&str> = vec![];
+
+    for i in input {
+        // each command chain is contained in this vec
+        if i[0].starts_with("cd") {
+            // add dir to history
+            let dir = i[0].split(" ").last().unwrap();
+            if dir == ".." {
+                // pop history
+                dir_history.pop();
+            } else {
+                // add to stack
+                dir_history.push(dir);
+            }
+        } else {
+            // loop through rest in subcommand
+            for j in 1..i.len() {
+                // find files
+                if !i[j].starts_with("dir") {
+                    let size = i[j].split(" ").collect::<Vec<&str>>()[0]
+                        .parse::<u64>()
+                        .unwrap();
+                    // add to all directories currently in history
+                    for dir in &dir_history {
+                        let folder_size: &u64;
+                        if directories.contains_key(dir) {
+                            folder_size = directories.get(dir).unwrap();
+                        } else {
+                            folder_size = &0;
+                        }
+                        let new_folder_size = size + folder_size;
+                        directories.insert(dir, new_folder_size);
+                    }
+                }
+            }
+        }
+    }
+
+    println!("{:?}", directories);
+    let mut s: u64 = 0;
+
+    for i in directories {
+        if i.1 <= 100_000 {
+            s += i.1;
+        }
+    }
+
+    println!("All dir that have size less than 100000 sum: {:?}", s);
+}
